@@ -38,9 +38,8 @@ private:
 template<class T>
 int Heap<T>::getItem(T item) {
     // TODO: return the index of item in heap
-    if(count == 0) return -1;
-    for(int i = 0; i < count; i++) {
-        if(elements[i] == item) return i;
+    for(int i = 0; i < this->count ; i++){
+        if(this->elements[i] == item) return i;
     }
     return -1;
 }
@@ -48,23 +47,22 @@ int Heap<T>::getItem(T item) {
 template<class T>
 void Heap<T>::remove(T item) {
     // TODO: remove the element with value equal to item
-    
-    int index = getItem(item);
-    
-    if(index == -1) return; 
-    
-    swap(elements[index],elements[--count]);
-
-    reheapDown(index);
-    
+    if(this->count != 0){
+        int i = getItem(item);
+        if(i != -1){
+            T temp = this->elements[count-1];
+            this->elements[count-1] = this->elements[i];
+            this->elements[i] = temp;
+            this->count--;
+            reheapDown(i);
+            reheapUp(i);
+        }
+    }
 }
-
 template<class T>
 void Heap<T>::clear() {
     // TODO: delete all elements in heap
-    //    then reallocate memory as initial state
-    delete[] elements;
-    count = 0;
-    elements = new T[capacity];
-
+    T * newelement = new T[this->capacity];
+    this->elements = newelement;
+    this->count = 0;
 }

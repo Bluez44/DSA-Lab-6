@@ -1,28 +1,27 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool findPairs(int arr[], int n, pair<int,int>& pair1, pair<int, int>& pair2) {
-    map<int, pair<int, int>> sumMap;
-
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
+bool findPairs(int arr[], int n, pair<int,int>& pair1, pair<int, int>& pair2)
+{
+   // TODO: If there are two pairs satisfy the condition, assign their values to pair1, pair2 and return true. Otherwise, return false.
+   map<int, pair<int, int> > Hash;
+ 
+    // Traverse through all possible pairs of arr[]
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = i + 1; j < n; ++j)
+        {
             int sum = arr[i] + arr[j];
-            if (sumMap.find(sum) != sumMap.end()) {
-                pair<int, int> pair1 = sumMap[sum];
-                pair<int, int> pair2 = make_pair(arr[i], arr[j]);
-                if (pair1.first != pair2.first && pair1.first != pair2.second
-                    && pair1.second != pair2.first && pair1.second != pair2.second) {
-                    cout << "Pairs with equal sum found: (" << pair1.first << ", " << pair1.second << ") and ("
-                              << pair2.first << ", " << pair2.second << ")" << endl;
-                    return true;
-                }
-            } else {
-                sumMap[sum] = make_pair(arr[i], arr[j]);
+            if (Hash.find(sum) == Hash.end()){
+                Hash[sum]=make_pair(arr[i],arr[j]);
+            }else 
+            {
+                pair1=Hash[sum];
+                pair2= make_pair(arr[i],arr[j]);
+                return true;
             }
         }
     }
-
-    cout << "No pairs with equal sum found" << endl;
     return false;
 }
 
